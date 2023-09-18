@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">MobileProject</string>
+    <string name="app_name">kalkulator</string>
+    <string name="input_panjang">Panjang</string>
+    <string name="input_lebar">Lebar</string>
+    <string name="input_tinggi">Tinggi</string>
+    <string name="btn_hitung">Hitung</string>
+    <string name="result">hasil</string>
 </resources>
