@@ -8,3 +8,4 @@ class MainActivityV2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_v2)
     }
+}
