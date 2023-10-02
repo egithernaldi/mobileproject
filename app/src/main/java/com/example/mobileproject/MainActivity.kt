@@ -1,55 +1,42 @@
 package com.example.mobileproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var inputpanjang: EditText
-    private lateinit var inputlebar: EditText
-    private lateinit var inputtinggi: EditText
-    private lateinit var btn: Button
-    private lateinit var tekshasil: TextView
+    private lateinit var btn_switch: Button
+    private lateinit var btnMoveWithDataActivity: Button
 
-    companion object{
-        private const val STATE_RESULT  = "state_result"
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        btn_switch = findViewById(R.id.btn_move_activity)
+        btn_switch.setOnClickListener(this)
 
-//        inisial Variable
-        inputpanjang = findViewById(R.id.panjang)
-        inputlebar = findViewById(R.id.lebar)
-        btn = findViewById(R.id.tombol)
-        inputtinggi = findViewById(R.id.height)
-        tekshasil = findViewById(R.id.hasil)
-
-        btn.setOnClickListener(this)
-
-        if (savedInstanceState != null) {
-            tekshasil.text = savedInstanceState.getString(STATE_RESULT)
-        }
+        btnMoveWithDataActivity= findViewById(R.id.btn_move_activity_data)
+        btnMoveWithDataActivity.setOnClickListener(this)
 
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(STATE_RESULT, tekshasil.text.toString())
-    }
-
     override fun onClick(v: View?) {
-        if (v?.id==R.id.tombol){
-            val panjang = inputpanjang.text.toString().trim()
-            val lebar = inputlebar.text.toString().trim()
-            val tinggi = inputtinggi.text.toString()
-            val volume = panjang.toDouble()*lebar.toDouble()*tinggi.toDouble()
-            tekshasil.text = volume.toString()
+        when (v?.id) {
+            R.id.btn_move_activity -> {
+                val moveIntent = Intent(this@MainActivity, MainActivityV2::class.java)
+                startActivity(moveIntent)
+            }
+            R.id.btn_move_activity_data -> {
+                val moveWithDataIntent = Intent(this@MainActivity, MoveWithDataActivity::class.java)
+                moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_NAME, "Egit Hernaldi")
+                moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_AGE, 21)
+                moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_PRODI, "PTI")
+                startActivity(moveWithDataIntent)
+            }
         }
     }
 }
