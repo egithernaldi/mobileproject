@@ -14,9 +14,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btn: Button
     private lateinit var tekshasil: TextView
 
+    companion object{
+        private const val STATE_RESULT  = "state_result"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
 //        inisial Variable
         inputpanjang = findViewById(R.id.panjang)
@@ -27,14 +32,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         btn.setOnClickListener(this)
 
+        if (savedInstanceState != null) {
+            tekshasil.text = savedInstanceState.getString(STATE_RESULT)
+        }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_RESULT, tekshasil.text.toString())
     }
 
     override fun onClick(v: View?) {
         if (v?.id==R.id.tombol){
             val panjang = inputpanjang.text.toString().trim()
             val lebar = inputlebar.text.toString().trim()
-            val tinggi = inputtinggi.text.toString().toString()
+            val tinggi = inputtinggi.text.toString()
             val volume = panjang.toDouble()*lebar.toDouble()*tinggi.toDouble()
             tekshasil.text = volume.toString()
         }
