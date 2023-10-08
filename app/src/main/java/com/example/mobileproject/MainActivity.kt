@@ -10,6 +10,7 @@ import android.widget.Button
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btn_switch: Button
     private lateinit var btnMoveWithDataActivity: Button
+    private lateinit var btnMoveWithObject: Button
 
 
 
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         btnMoveWithDataActivity= findViewById(R.id.btn_move_activity_data)
         btnMoveWithDataActivity.setOnClickListener(this)
+
+        btnMoveWithObject= findViewById(R.id.btn_move_activity_object)
+        btnMoveWithObject.setOnClickListener(this)
 
     }
     override fun onClick(v: View?) {
@@ -36,6 +40,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_AGE, 21)
                 moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_PRODI, "PTI")
                 startActivity(moveWithDataIntent)
+            }
+            R.id.btn_move_activity_object -> {
+                val person = Person(
+                    "Egit Hernaldi",
+                    21,
+                    "egithrnld29@gmail.com",
+                    "Padang"
+                )
+                val moveWithObjectIntent = Intent(this@MainActivity, MoveWithObjectActivity::class.java)
+                moveWithObjectIntent.putExtra(MoveWithObjectActivity.EXTRA_PERSON, person)
+                startActivity(moveWithObjectIntent)
             }
         }
     }
