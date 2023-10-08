@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -13,6 +15,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btnMoveWithDataActivity: Button
     private lateinit var btnMoveWithObject: Button
     private lateinit var btnDialPhone: Button
+    private lateinit var btnMoveForResult: Button
+    private lateinit var tvResult: TextView
+    private val resultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == MoveForResultActivity.RESULT_CODE && result.data != null) {
+            val selectedValue =
+                result.data?.getIntExtra(MoveForResultActivity.EXTRA_SELECTED_VALUE, 0)
+            tvResult.text = "Hasil : $selectedValue"
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +43,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         btnDialPhone= findViewById(R.id.btn_dial_number)
         btnDialPhone.setOnClickListener(this)
+
+        btnMoveForResult= findViewById(R.id.btn_move_for_result)
+        btnMoveForResult.setOnClickListener(this)
+
+        tvResult = findViewById(R.id.tv_result)
 
     }
     override fun onClick(v: View?) {
@@ -60,6 +78,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val phoneNumber = "085278063571"
                 val dialPhoneIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                 startActivity(dialPhoneIntent)
+            }
+            R.id.btn_move_for_result -> {
+                val moveForResultIntent = Intent(this@MainActivity, MoveForResultActivity::class.java)
+                resultLauncher.launch(moveForResultIntent)
             }
         }
     }
